@@ -1,0 +1,17 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Ligue 1 football CRUD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "football",
+    "ligue",
+    "1",
+    "CRUD"
+  ],
+  "author": "Romain AROLDI",
+  "license": "ISC"
+}
