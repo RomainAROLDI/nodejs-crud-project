@@ -28,15 +28,18 @@ export class TeamService {
                     const team = document.createElement('tr');
 
                     const logo = document.createElement('td');
+                    logo.classList.add('text-center');
                     logo.innerHTML = "<img style='max-width: 40px; max-height: 40px' src='" + elt.logo + "' alt='Logo de " + elt.name + "'>";
 
                     const title = document.createElement('td');
+                    title.classList.add('align-middle');
                     title.innerHTML = elt.name;
 
                     const update = document.createElement('td');
                     const icon = document.createElement('i');
-                    icon.classList.add('fas', 'fa-light', 'fa-circle-info');
+                    icon.classList.add('fas', 'fa-light', 'fa-eye');
                     const myLinkToDetails = document.createElement('a');
+                    myLinkToDetails.classList.add('fs-4');
                     myLinkToDetails.setAttribute('href', './pages/details.html#' + elt._id);
                     myLinkToDetails.appendChild(icon);
                     update.appendChild(myLinkToDetails);
@@ -51,7 +54,7 @@ export class TeamService {
                     tdDelete.appendChild(btnDelete);
                     btnDelete.appendChild(icon2);
                     btnDelete.addEventListener('click', () => {
-                        //this.remove(elt._id);
+                        this.remove(elt._id);
                     });
 
                     team.appendChild(logo);
@@ -108,25 +111,12 @@ export class TeamService {
             body: JSON.stringify(team)
         };
 
-        const toast = document.querySelector('#toast');
-
-        return fetch(url, options)
-            .then((res) => {
-                if(res.ok) {
-                    toast.querySelector('p').textContent = "Le club " + team.name + " a bien été modifié.";
-                } else {
-                    toast.querySelector('p').textContent = "Une erreur s'est produite lors de la modification, veuillez réessayer.";
-                    toast.classList.replace('bg-success', 'bg-warning');
-                }
-                toast.classList.replace('d-none', 'd-flex');
-                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
-            })
-            .catch((error) => {
-                toast.querySelector('p').innerHTML = "Une erreur s'est produite lors de la modification, veuillez réessayer.<br>Erreur : " + error;
-                toast.classList.replace('bg-success', 'bg-warning');
-                toast.classList.replace('d-none', 'd-flex');
-                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
-            });
+        return this.submitRequest(
+            url,
+            options,
+            "Le club " + team.name + " a bien été modifié.",
+            "Une erreur s'est produite lors de la modification, veuillez réessayer."
+        );
     }
 
     /**
@@ -134,8 +124,8 @@ export class TeamService {
      * @param {Team} team
      */
     add(team) {
-        let url = '/team';
-        let options = {
+        const url = '/team';
+        const options = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -146,24 +136,57 @@ export class TeamService {
             body: JSON.stringify(team)
         };
 
+        return this.submitRequest(
+            url,
+            options,
+            "Le club " + team.name + " a bien été ajouté.",
+            "Une erreur s'est produite lors de l'ajout du club, veuillez réessayer."
+        );
+    }
+
+    /**
+     * Suppression d'une équipe d'identifiant id
+     * @param id - identifiant de l'équipe
+     */
+    remove(id) {
+        const url = '/team/' + id;
+        const headers = new Headers();
+        const options = {
+            method : 'DELETE',
+            headers: headers
+        };
+
+        return this.submitRequest(
+            url,
+            options,
+            "Le club a bien été supprimé.",
+            "Une erreur s'est produite lors de la suppression du club, veuillez réessayer.",
+            true
+        );
+    }
+
+    submitRequest(url, options, successMessage, errorMessage, reload = false) {
+
         const toast = document.querySelector('#toast');
 
         return fetch(url, options)
             .then((res) => {
                 if(res.ok) {
-                    toast.querySelector('p').textContent = "Le club " + team.name + " a bien été ajouté.";
+                    if (reload) location.reload();
+                    toast.querySelector('p').textContent = successMessage;
                 } else {
-                    toast.querySelector('p').textContent = "Une erreur s'est produite lors de l'ajout du club, veuillez réessayer.";
+                    toast.querySelector('p').textContent = errorMessage;
                     toast.classList.replace('bg-success', 'bg-warning');
                 }
                 toast.classList.replace('d-none', 'd-flex');
-                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
+                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 5000);
+                toast.classList.replace('d-none', 'd-flex');
             })
             .catch((error) => {
-                toast.querySelector('p').innerHTML = "Une erreur s'est produite lors de l'ajout du club, veuillez réessayer.<br>Erreur : " + error;
+                toast.querySelector('p').innerHTML = errorMessage + "<br>Erreur : " + error;
                 toast.classList.replace('bg-success', 'bg-warning');
                 toast.classList.replace('d-none', 'd-flex');
-                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
+                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 5000);
             });
     }
 }

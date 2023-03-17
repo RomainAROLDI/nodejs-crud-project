@@ -42,7 +42,15 @@ app.put('/team/:id', (req, res) => {
 app.post('/team', (req, res) => {
     const newTeam = req.body;
     newTeam._id = uuidv4();
-    // console.log(newFilm);
     Teams.push(newTeam);
+    res.sendStatus(200);
+});
+
+app.delete('/team/:id', (req, res) => {
+    const id = req.params.id;
+    const index = _.findIndex(Teams, (o) => {
+        return o._id === id;
+    });
+    Teams.splice(index, 1);
     res.sendStatus(200);
 });

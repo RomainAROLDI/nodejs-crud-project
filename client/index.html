@@ -11,18 +11,21 @@
     </head>
     <body>
         <header class="my-3">
-            <h1 class="text-center">Accueil</h1>
+            <h1 class="text-center">Clubs de ligue 1</h1>
         </header>
-        <article>
-            <a href="./pages/newteam.html" class="btn btn-outline-success">Ajouter une équipe</a>
-            <div class="row">
-                <div class="col-6 offset-3">
+        <article class="container my-5">
+            <div class="row justify-content-evenly mb-3">
+                <div class="col-12 col-lg-7">
+                    <a href="./pages/newteam.html" class="btn btn-outline-success">Ajouter une équipe</a>
+                </div>
+            </div>
+            <div class="row justify-content-evenly">
+                <div class="col-12 col-lg-7">
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th colspan="2">Club</th>
-                            <th>Détails</th>
-                            <th>Suppression</th>
+                            <th colspan="2">Actions</th>
                         </tr>
                         </thead>
                         <tbody id="teams-list">
@@ -32,5 +35,8 @@
                 </div>
             </div>
         </article>
+        <div id="toast" class="d-none justify-content-center align-items-center bg-success text-light fixed-bottom">
+            <p class="m-2"></p>
+        </div>
     </body>
 </html>
