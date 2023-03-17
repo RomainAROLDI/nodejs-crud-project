@@ -128,4 +128,42 @@ export class TeamService {
                 setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
             });
     }
+
+    /**
+     * Ajoute une novuelle équipe à la collection
+     * @param {Team} team
+     */
+    add(team) {
+        let url = '/team';
+        let options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            cache: 'default',
+            body: JSON.stringify(team)
+        };
+
+        const toast = document.querySelector('#toast');
+
+        return fetch(url, options)
+            .then((res) => {
+                if(res.ok) {
+                    toast.querySelector('p').textContent = "Le club " + team.name + " a bien été ajouté.";
+                } else {
+                    toast.querySelector('p').textContent = "Une erreur s'est produite lors de l'ajout du club, veuillez réessayer.";
+                    toast.classList.replace('bg-success', 'bg-warning');
+                }
+                toast.classList.replace('d-none', 'd-flex');
+                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
+            })
+            .catch((error) => {
+                toast.querySelector('p').innerHTML = "Une erreur s'est produite lors de l'ajout du club, veuillez réessayer.<br>Erreur : " + error;
+                toast.classList.replace('bg-success', 'bg-warning');
+                toast.classList.replace('d-none', 'd-flex');
+                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
+            });
+    }
 }

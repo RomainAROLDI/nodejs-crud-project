@@ -38,3 +38,11 @@ app.put('/team/:id', (req, res) => {
     Teams[index] = req.body;
     res.sendStatus(200);
 });
+
+app.post('/team', (req, res) => {
+    const newTeam = req.body;
+    newTeam._id = uuidv4();
+    // console.log(newFilm);
+    Teams.push(newTeam);
+    res.sendStatus(200);
+});
