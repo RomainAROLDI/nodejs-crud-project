@@ -65,4 +65,55 @@ export class TeamService {
             })
             .catch(error => console.log(`Error : ${error}`));
     }
+
+    /**
+     * Renvoie l'équipe correspondante à l'identifiant
+     * @param {String} id - _id de l'équipe concernée
+     * @return {Team}
+     */
+    get(id) {
+        const headers = new Headers();
+        const url = '/team/' + id;
+        const options = {
+            method: 'GET',
+            headers: headers
+        };
+
+        return fetch(url, options)
+            .then((res) => {
+                if(res.ok) {
+                    return res.json();
+                }
+            })
+            .then((element) => {
+                return new Team(element._id, element.name, element.logo, element.foundation, element.stadium);
+            })
+            .catch(error => console.log(`Error : ${error}`));
+    }
+
+    /**
+     * Modifie l'équipe passée en paramètre
+     * @param {Team} team
+     */
+    update(team) {
+        const url = '/team/' + team._id;
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            cache: 'default',
+            body: JSON.stringify(team)
+        };
+
+        return fetch(url, options)
+            .then((res) => {
+                if(res.ok) {
+                    console.log('updated')
+                }
+            })
+            .catch(error => console.log(`Error : ${error}`));
+    }
 }
