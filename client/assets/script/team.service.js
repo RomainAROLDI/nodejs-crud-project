@@ -86,7 +86,7 @@ export class TeamService {
                 }
             })
             .then((element) => {
-                return new Team(element._id, element.name, element.logo, element.foundation, element.stadium);
+                return new Team(element._id, element.name, element.stadium, element.foundation, element.logo);
             })
             .catch(error => console.log(`Error : ${error}`));
     }
@@ -108,12 +108,24 @@ export class TeamService {
             body: JSON.stringify(team)
         };
 
+        const toast = document.querySelector('#toast');
+
         return fetch(url, options)
             .then((res) => {
                 if(res.ok) {
-                    console.log('updated')
+                    toast.querySelector('p').textContent = "Le club " + team.name + " a bien été modifié.";
+                } else {
+                    toast.querySelector('p').textContent = "Une erreur s'est produite lors de la modification, veuillez réessayer.";
+                    toast.classList.replace('bg-success', 'bg-warning');
                 }
+                toast.classList.replace('d-none', 'd-flex');
+                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
             })
-            .catch(error => console.log(`Error : ${error}`));
+            .catch((error) => {
+                toast.querySelector('p').innerHTML = "Une erreur s'est produite lors de la modification, veuillez réessayer.<br>Erreur : " + error;
+                toast.classList.replace('bg-success', 'bg-warning');
+                toast.classList.replace('d-none', 'd-flex');
+                setTimeout(() => toast.classList.replace('d-flex', 'd-none'), 6000);
+            });
     }
 }

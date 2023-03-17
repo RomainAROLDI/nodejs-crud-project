@@ -1,16 +1,16 @@
 export class Team {
     _id;
-    _name;
-    _stadium;
-    _foundation;
-    _logo;
+    name;
+    stadium;
+    foundation;
+    logo;
 
     constructor(id, name, stadium, foundation, logo) {
         this._id = id;
-        this._name = name;
-        this._stadium = stadium;
-        this._foundation = foundation;
-        this._logo = logo;
+        this.name = name;
+        this.stadium = stadium;
+        this.foundation = foundation;
+        this.logo = logo;
     }
 
     get _id() {
@@ -22,34 +22,34 @@ export class Team {
     }
 
     get name() {
-        return this._name;
+        return this.name;
     }
 
     set name(value) {
-        this._name = value;
+        this.name = value;
     }
 
     get stadium() {
-        return this._stadium;
+        return this.stadium;
     }
 
     set stadium(value) {
-        this._stadium = value;
+        this.stadium = value;
     }
 
     get foundation() {
-        return this._foundation;
+        return this.foundation;
     }
 
     set foundation(value) {
-        this._foundation = value;
+        this.foundation = value;
     }
 
     get logo() {
-        return this._logo;
+        return this.logo;
     }
 
     set logo(value) {
-        this._logo = value;
+        this.logo = value;
     }
 }

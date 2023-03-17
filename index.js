@@ -2,8 +2,11 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const Teams = require('./data/teams');
+const _ = require('lodash');
+const { v4: uuidv4 } = require('uuid');
 
 app.use('/assets', express.static('./client/assets'));
+app.use('/pages', express.static('./client/pages'));
 app.use(express.json());
 
 app.listen(port, () => {
@@ -16,4 +19,22 @@ app.get('/', (req, res) => {
 
 app.get('/teams', (req, res) => {
     res.send(Teams);
+});
+
+app.get('/team/:id', (req, res) => {
+    const id = req.params.id;
+    const team = _.find(Teams, (o) => {
+        return o._id === id;
+    });
+    res.send(team);
+});
+
+app.put('/team/:id', (req, res) => {
+    const id = req.params.id;
+    const index = _.findIndex(Teams, (o) => {
+        return o._id === id;
+    });
+
+    Teams[index] = req.body;
+    res.sendStatus(200);
 });
