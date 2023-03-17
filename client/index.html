@@ -6,10 +6,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Accueil</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+        <script type="module" src="./assets/script/list.js"></script>
     </head>
     <body>
         <header>
-            <h1 class="text-danger">Accueil</h1>
+            <h1 class="text-center my-3">Accueil</h1>
         </header>
+        <article>
+            <a href="#" class="btn btn-outline-success">Ajouter une équipe</a>
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th colspan="2">Club</th>
+                            <th>Détails</th>
+                            <th>Suppression</th>
+                        </tr>
+                        </thead>
+                        <tbody id="teams-list">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
     </body>
 </html>
